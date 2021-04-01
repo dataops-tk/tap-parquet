@@ -6,10 +6,7 @@ from copy import deepcopy
 from pathlib import Path
 from typing import Any, Dict, Optional, Union, List, Iterable
 
-
 from singer_sdk.streams import Stream
-
-
 from singer_sdk.typing import (
     ArrayType,
     BooleanType,
@@ -21,6 +18,8 @@ from singer_sdk.typing import (
     Property,
     StringType,
 )
+
+import pyarrow.parquet as pq
 
 SCHEMAS_DIR = Path(__file__).parent / Path("./schemas")
 
