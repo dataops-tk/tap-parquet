@@ -27,15 +27,33 @@ class TapParquet(Tap):
 
     name = "tap-parquet"
 
-    # TODO: Update this section with the actual config values you expect:
     config_jsonschema = PropertiesList(
         Property("start_date", DateTimeType),
-        Property("filepath", StringType),
+        Property("filepath", StringType, required=True),
     ).to_dict()
 
     def discover_streams(self) -> List[Stream]:
         """Return a list of discovered streams."""
-        return [stream_class(tap=self) for stream_class in STREAM_TYPES]
+        result: List[Stream] = []
+        for filename in [self.config["filepath"]]:
+            new_stream = ParquetStream(
+                tap=self,
+                name=filename,
+                schema=self.detect_json_schema(filename),
+            )
+            new_stream.primary_keys = self.detect_primary_keys(filename)
+            result.append(new_stream)
+        return result
+
+    def detect_json_schema(self, parquet_filepath: str) -> dict:
+        return PropertiesList(
+            Property("f0", StringType, required=True),
+            Property("f1", StringType),
+            Property("f2", StringType),
+        ).to_dict()
+
+    def detect_primary_keys(self, parquet_filepath: str) -> List[str]:
+        return ["f0"]
 
 
 # CLI Execution:
