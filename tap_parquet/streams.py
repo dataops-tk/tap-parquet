@@ -30,41 +30,18 @@ class ParquetStream(Stream):
 
     def get_records(self, partition: Optional[dict] = None) -> Iterable[dict]:
         """Return a generator of row-type dictionary objects."""
-        # TODO: Write logic to extract data from the upstream source.
-        # rows = mysource.getall()
-        # for row in rows:
-        #     yield row.to_dict()
-        raise NotImplementedError("The method is not yet implemented (TODO)")
-
-
-# TODO: - Override `UsersStream` and `GroupsStream` with your own stream definition.
-#       - Copy-paste as many times as needed to create multiple stream types.
-class UsersStream(ParquetStream):
-    name = "users"
-
-    primary_keys = ["id"]
-    replication_key = None
-    # Optionally, you may also use `schema_filepath` in place of `schema`:
-    # schema_filepath = SCHEMAS_DIR / "users.json"
-    schema = PropertiesList(
-        Property("name", StringType),
-        Property("id", StringType),
-        Property("age", IntegerType),
-        Property("email", StringType),
-        Property("street", StringType),
-        Property("city", StringType),
-        Property("state", StringType),
-        Property("zip", StringType),
-    ).to_dict()
-
-
-class GroupsStream(ParquetStream):
-    name = "groups"
-
-    primary_keys = ["id"]
-    replication_key = "modified"
-    schema = PropertiesList(
-        Property("name", StringType),
-        Property("id", StringType),
-        Property("modified", DateTimeType),
-    ).to_dict()
+        filepath = self.config.get("filepath")
+        if not filepath:
+            raise ValueError("Parquet 'filepath' config cannot be blank.")
+        try:
+            parquet_file = pq.ParquetFile(filepath)
+        except Exception as ex:
+            raise IOError(f"Could not read from parquet filepath '{filepath}': {ex}")
+        for i in range(parquet_file.num_row_groups):
+            table = parquet_file.read_row_group(i)
+            for batch in table.to_batches():
+                for row in zip(*batch.columns):
+                    yield {
+                        table.column_names[i]: val.as_py()
+                        for i, val in enumerate(row, start=0)
+                    }

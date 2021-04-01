@@ -19,17 +19,7 @@ from singer_sdk.typing import (
 # TODO: Import your custom stream types here:
 from tap_parquet.streams import (
     ParquetStream,
-    UsersStream,
-    GroupsStream,
 )
-
-
-# TODO: Compile a list of custom stream types here
-#       OR rewrite discover_streams() below with your custom logic.
-STREAM_TYPES = [
-    UsersStream,
-    GroupsStream,
-]
 
 
 class TapParquet(Tap):
