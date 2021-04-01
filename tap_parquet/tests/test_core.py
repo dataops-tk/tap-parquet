@@ -8,7 +8,8 @@ from singer_sdk.testing import get_standard_tap_tests
 from tap_parquet.tap import TapParquet
 
 SAMPLE_CONFIG = {
-    "start_date": datetime.datetime.now(datetime.timezone.utc),
+    "start_date": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d"),
+    "filepath": str(Path(__file__).parent / "resources/testfile.parquet"),
 }
 
 
