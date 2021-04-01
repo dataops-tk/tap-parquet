@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "tap-parquet"
+version = "0.0.1"
+description = "`tap-parquet` is Singer tap for Parquet, built with the Singer SDK."
+authors = ["TODO: Your Name <your.email@sample.com>"]
+license = "Apache 2.0"
+
+[tool.poetry.dependencies]
+python = "<3.9,>=3.6"
+requests = "^2.25.1"
+singer-sdk = {git = "https://gitlab.com/meltano/singer-sdk", rev = "development"}
+
+[tool.poetry.dev-dependencies]
+pytest = "^6.1.2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+# CLI declaration
+tap-parquet = 'tap_parquet.tap:cli'
