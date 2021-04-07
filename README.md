@@ -2,6 +2,13 @@
 
 This Singer tap was created using the [Singer SDK](https://gitlab.com/meltano/singer-sdk).
 
+## About Parquet
+
+Parquet is a portable, type-aware, columnar, compressed, splittable, and cloud-friendly and data format.
+
+For more information why Parquet is increasingly used in big data applications, see
+[this comparison](https://www.linkedin.com/pulse/spark-file-format-showdown-csv-vs-json-parquet-garren-staubli/).
+
 ## Getting Started
 
 - [ ] As a first step, you will want to scan the entire project for the text "`TODO:`" and complete any recommended steps.
