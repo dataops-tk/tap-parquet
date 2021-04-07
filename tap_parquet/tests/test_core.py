@@ -16,7 +16,7 @@ SAMPLE_CONFIG = {
 # Get built-in 'generic' tap tester from SDK:
 def test_parquet_tap_standard_tests():
     """Run standard tap tests against Parquet) tap."""
-    tests = get_standard_tap_tests(TapParquet, tap_config=SAMPLE_CONFIG)
+    tests = get_standard_tap_tests(TapParquet, config=SAMPLE_CONFIG)
     for test in tests:
         test()
 

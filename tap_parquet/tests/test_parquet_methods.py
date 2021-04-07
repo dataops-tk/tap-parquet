@@ -3,7 +3,7 @@
 import pyarrow as pa
 import pyarrow.parquet as pq
 
-from singer_sdk.samples.sample_tap_parquet.parquet_tap import SampleTapParquet
+from tap_parquet.tap import TapParquet
 
 COUNTER = 0
 
@@ -31,14 +31,16 @@ def _make_sample_batch():
 def test_parquet_sync_one():
     """Test sync_one() for parquet sample."""
     _parquet_write()
-    tap = SampleTapParquet(config=SAMPLE_CONFIG)
-    tap.sync_one("ASampleTable")
+    tap = TapParquet(config=SAMPLE_CONFIG)
+    for stream_name in tap.streams.keys():
+        tap.sync_one(stream_name)
+        break
 
 
 def test_parquet_sync_all():
     """Test sync_all() for parquet sample."""
     _parquet_write()
-    tap = SampleTapParquet(config=SAMPLE_CONFIG)
+    tap = TapParquet(config=SAMPLE_CONFIG)
     tap.sync_all()
 
 

@@ -8,11 +8,12 @@ license = "Apache 2.0"
 [tool.poetry.dependencies]
 python = "<3.9,>=3.6"
 requests = "^2.25.1"
-singer-sdk = {git = "https://gitlab.com/meltano/singer-sdk", rev = "development"}
+singer-sdk = "^0.1.0"
 pyarrow = "^3.0.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.1.2"
+black = {version = "^20.8b1", allow-prereleases = true}
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
