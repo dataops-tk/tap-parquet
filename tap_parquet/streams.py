@@ -46,7 +46,10 @@ class ParquetStream(Stream):
 
     @property
     def schema(self) -> dict:
-        """Dynamically detect the json schema for the stream."""
+        """Dynamically detect the json schema for the stream.
+
+        This is evaluated prior to any records being retrieved.
+        """
         properties: List[Property] = []
         parquet_schema = pq.ParquetFile(self.filepath).schema_arrow
         for i in range(len(parquet_schema.names)):
