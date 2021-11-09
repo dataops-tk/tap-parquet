@@ -2,7 +2,7 @@
 name = "tap-parquet"
 version = "0.0.1"
 description = "`tap-parquet` is Singer tap for Parquet, built with the Singer SDK."
-authors = ["TODO: Your Name <your.email@sample.com>"]
+authors = ["Aaron Steers <aj@meltano.com>"]
 license = "Apache 2.0"
 
 [tool.poetry.dependencies]
