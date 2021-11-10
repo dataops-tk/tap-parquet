@@ -33,6 +33,8 @@ def get_jsonschema_type(ansi_type: str) -> JSONTypeHelper:
         return StringType()
     if "bool" in ansi_type:
         return BooleanType()
+    if "timestamp[ns]" in ansi_type:
+        return DateTimeType()
     raise ValueError(f"Unmappable data type '{ansi_type}'.")
 
 
